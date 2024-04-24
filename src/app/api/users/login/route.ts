@@ -14,13 +14,13 @@ export async function  POST(request:NextRequest){
 
         const user = await User.findOne({email})
 
+        if(!email || !password){
+            return NextResponse.json({error: "Plz fill all feilds"}, {status: 400})
+        }
         if(!user){
             return NextResponse.json({error: "User does not exist"}, {status: 400})
         }
 
-        if(!email || !password){
-            return NextResponse.json({error: "Plz fill all feilds"}, {status: 400})
-        }
 
 
         const validPassword = await bcryptjs.compare(password, user.password)
